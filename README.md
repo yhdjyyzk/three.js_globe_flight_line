@@ -1,2 +1,2 @@
 # three.js_globe_flight_line
-模拟  http://globe.cid.harvard.edu/  飞线
+threejs三维地球的飞线，仿照 http://globe.cid.harvard.edu/

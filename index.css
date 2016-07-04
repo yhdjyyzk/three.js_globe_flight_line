@@ -1,0 +1,23 @@
+.dataSourceInfo {
+    position: absolute;
+
+    top: 1px;
+    left: 100px;
+
+    z-index: 2000;
+
+    width: 100px;
+    height: 60px;
+
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+
+    color: #000;
+
+    display: none;
+  }
+
+  .globe{
+      width:1000px;
+      height: 800px;
+  }

@@ -4,7 +4,7 @@ VAG.Globe = function (container, opts) {
     var Shaders = {
         'earth': {
             uniforms: {
-                'texture': {type: 't', value: null}
+                'texture': { type: 't', value: null }
             },
             vertexShader: [
                 'varying vec3 vNormal;',
@@ -53,10 +53,10 @@ VAG.Globe = function (container, opts) {
 
     var curZoomSpeed = 0;
 
-    var mouse = {x: 0, y: 0}, mouseOnDown = {x: 0, y: 0};
-    var rotation = {x: 0, y: 0},
-        target = {x: Math.PI * 1.2 / 2, y: Math.PI / 6.0},
-        targetOnDown = {x: 0, y: 0};
+    var mouse = { x: 0, y: 0 }, mouseOnDown = { x: 0, y: 0 };
+    var rotation = { x: 0, y: 0 },
+        target = { x: Math.PI * 1.2 / 2, y: Math.PI / 6.0 },
+        targetOnDown = { x: 0, y: 0 };
 
     var distance = 8000, distanceTarget = 800;
     var PI_HALF = Math.PI / 2;
@@ -93,7 +93,9 @@ VAG.Globe = function (container, opts) {
             color: 0x000000
         });
         geometry = new THREE.SphereGeometry(radius, 40, 30);
-        earthGlobe = new THREE.Mesh(geometry, material);
+        // earthGlobe = new THREE.Mesh(geometry, material);
+        earthGlobe = createMesh(geometry, "./worldMap.png");
+        earthGlobe.rotation.y = - Math.PI / 2;
         scene.add(earthGlobe);
 
         shader = Shaders['atmosphere'];
@@ -112,7 +114,7 @@ VAG.Globe = function (container, opts) {
         mesh.scale.set(1.1, 1.1, 1.1);
         scene.add(mesh);
 
-        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(w, h);
         renderer.setClearColor(0x000000);
 
@@ -121,17 +123,17 @@ VAG.Globe = function (container, opts) {
         drawDataSource();
 
 
-        var dst = {lng: 116, lat: 40};
-        var src = {lng: -43, lat: -22};
+        var dst = { lng: 116, lat: 40 };
+        var src = { lng: -43, lat: -22 };
         flightLine(src, dst);
 
-        src = {lng: -179, lat: 30};
-        dst = {lng: 116, lat: 40};
+        src = { lng: -179, lat: 30 };
+        dst = { lng: 116, lat: 40 };
         /*ToDo*/
         flightLine(src, dst);
 
-        src = {lng: 140, lat: 35};
-        dst = {lng: 116, lat: 40};
+        src = { lng: 140, lat: 35 };
+        dst = { lng: 116, lat: 40 };
         /*ToDo*/
         flightLine(src, dst);
 
@@ -208,7 +210,7 @@ VAG.Globe = function (container, opts) {
     }
 
     function createMesh(geometry, imageFile) {
-        var texturecreateMesh = THREE.ImageUtils.loadTexture("./image/globe/" + imageFile);
+        var texturecreateMesh = THREE.ImageUtils.loadTexture(imageFile);
         var materialCreateMesh = new THREE.MeshBasicMaterial({
             // color: 0x000000
         });
@@ -497,7 +499,7 @@ VAG.Globe = function (container, opts) {
             "mousemove": function (event) {
                 if (dataSource != null) {
                     var vector = new THREE.Vector3(((event.clientX) / parseInt($("#globe").css("width"))) * 2 - 1,
-                        -((event.clientY ) / parseInt($("#globe").css("height"))) * 2 + 1, 0.1);
+                        -((event.clientY) / parseInt($("#globe").css("height"))) * 2 + 1, 0.1);
 
                     vector.unproject(camera);
 
@@ -557,8 +559,8 @@ VAG.Globe = function (container, opts) {
     }
 
     function animateDataSource() {
-        var tween = new TWEEN.Tween({radius: dstRadius})
-            .to({radius: radius}, 3500)
+        var tween = new TWEEN.Tween({ radius: dstRadius })
+            .to({ radius: radius }, 3500)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(function () {
                 var r = this.radius;
@@ -773,11 +775,11 @@ VAG.Globe = function (container, opts) {
              */
             if (index <= number / 2) {
                 //r = radius + index * radius / (number / 2 * 10);
-                r = radius + 4 * h / (number + 2) * index - (index * (index - 1 ) / 2) * 8 * h / (Math.pow(number, 2) + 2 * number );
+                r = radius + 4 * h / (number + 2) * index - (index * (index - 1) / 2) * 8 * h / (Math.pow(number, 2) + 2 * number);
             } else {
                 //r = radius + radius / 10 - (index - number / 2) * radius / (number / 2 * 10);
                 var i = number - index;
-                r = radius + 4 * h / (number + 2) * i - (i * (i - 1 ) / 2) * 8 * h / (Math.pow(number, 2) + 2 * number );
+                r = radius + 4 * h / (number + 2) * i - (i * (i - 1) / 2) * 8 * h / (Math.pow(number, 2) + 2 * number);
             }
 
             var coor = LngLat2Coordinate(segments[index]["lng"], segments[index]["lat"], r);
@@ -796,8 +798,8 @@ VAG.Globe = function (container, opts) {
 
         var flightPoints = new THREE.Points(flightPointsGeometry, flightPointsMaterial);
 
-        var tween = new TWEEN.Tween({num: 0})
-            .to({num: flightPoints.geometry.colors.length}, 3500)
+        var tween = new TWEEN.Tween({ num: 0 })
+            .to({ num: flightPoints.geometry.colors.length }, 3500)
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(function () {
                 var n = Math.floor(this.num);

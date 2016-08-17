@@ -70,8 +70,9 @@ VAG.Globe = function (container, opts) {
         container.style.font = '13px/20px Arial, sans-serif';
 
         var shader, uniforms, material;
-        w = container.offsetWidth || window.innerWidth;
-        h = container.offsetHeight || window.innerHeight;
+
+        w = $(window).width();
+        h= $(window).height();
 
         camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100000);
         scene = new THREE.Scene();
